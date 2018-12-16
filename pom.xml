@@ -32,7 +32,9 @@
   </parent>
 
   <properties>
-        <scm.url>https://github.com/zolyfarkas/core-schema</scm.url>
+    <scm.url>https://github.com/zolyfarkas/core-schema</scm.url>
+    <avro.allowUndefinedLogicalTypes>true</avro.allowUndefinedLogicalTypes>
+    <avro.validator.validFieldNames>ts</avro.validator.validFieldNames>
   </properties>
 
   <scm>

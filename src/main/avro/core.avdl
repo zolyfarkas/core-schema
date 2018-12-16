@@ -77,13 +77,18 @@ protocol Core {
 
     /** a record to describe a service error */
     record ServiceError {
-      /** a error code*/
+      /** a error code, efaults to internal serve error */
       int code = 500;
       /** a tring describing the type of the error, ex: the exception type */
       string type = "";
       /** a error message */
       string message;
-      /** optional debug detail, will be missing across security boundaries */
+      /**
+       * optional (when null) debug detail, will be missing when:
+       * a client does not desire it.
+       * when  client is  not entitled to access it.
+       * across security boundaries.
+       */
       union {null, DebugDetail} detail = null;
     }
 }
