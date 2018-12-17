@@ -2,49 +2,51 @@
 protocol Core {
 
    /** record representing a jar archive info */
-    record JPackageInfo {
-      /** the package url */
+    record PackageInfo {
+      /** the package location url */
       string url = "";
-      /** version from manifest  */
+      /** package version from manifest  */
       string version = "";
     }
 
     /** a location in a file */
-    record JFileLocation {
+    record FileLocation {
       /** file name */
       string fileName;
       /** line number */
       int lineNumber;
+      /** column number, -1 when not available */
+      int columnNumber = -1;
     }
 
     /** record representing the samples where a particular method was executed */
-    record JStackTraceElement {
+    record StackTraceElement {
       /** java class name */
       string className;
       /** java method name */
       string methodName;
       /** location, null when location not available */
-      union {null, JFileLocation} location;
+      union {null, FileLocation} location;
       /** package info, null when package info not available */
-      union {null, JPackageInfo} packageInfo;
+      union {null, PackageInfo} packageInfo;
     }
 
     /** a throwable */
-    record JThrowable {
+    record Throwable {
       /** exception class name */
       string className;
       /** exception message, can be null just like java exceptions */
       union { null, string } message = null;
       /** the stack trace */
-      array<JStackTraceElement> stackTrace = [];
+      array<StackTraceElement> stackTrace = [];
       /** exception cause, null when there is not cause */
-      union {null, JThrowable} cause = null;
+      union {null, Throwable} cause = null;
       /** suppressed exceptions */
-      array<JThrowable> suppressed = [];
+      array<Throwable> suppressed = [];
     }
 
     /** a log record */
-    record ALogRecord {
+    record LogRecord {
       /** trace id */
       string trId = "";
       /** log record timestamp*/
@@ -57,7 +59,7 @@ protocol Core {
       /** log message */
       string msg;
       /** a optional throwable, null when none */
-      union {null, JThrowable} throwable = null;
+      union {null, Throwable} throwable = null;
       /** extra log message payload */
       @logicalType("json_array")
       bytes xtra;
@@ -69,10 +71,10 @@ protocol Core {
       string origin = "";
 
       /** logs */
-      array<ALogRecord> logs = [];
+      array<LogRecord> logs = [];
 
       /** a optional throwable, null when none */
-      union {null, JThrowable} throwable = null;
+      union {null, Throwable} throwable = null;
     }
 
     /** a record to describe a service error */
