@@ -1,7 +1,8 @@
 @namespace("org.spf4j.base.avro")
 protocol Core {
 
-   /** record representing a jar archive info */
+    /** record representing a package(jar) archive info */
+    @beta
     record PackageInfo {
       /** the package location url */
       string url = "";
@@ -10,6 +11,7 @@ protocol Core {
     }
 
     /** a location in a file */
+    @beta
     record FileLocation {
       /** file name */
       string fileName;
@@ -19,7 +21,8 @@ protocol Core {
       int columnNumber = -1;
     }
 
-    /** record representing the samples where a particular method was executed */
+    /** record representing a Stack trace. */
+    @beta
     record StackTraceElement {
       /** java class name */
       string className;
@@ -31,7 +34,8 @@ protocol Core {
       union {null, PackageInfo} packageInfo = null;
     }
 
-    /** a throwable */
+    /** a throwable (Exception) */
+    @beta
     record Throwable {
       /** exception class name */
       string className;
@@ -48,7 +52,7 @@ protocol Core {
     /** a log record */
     @beta
     record LogRecord {
-      /** origin detail */
+      /** origin of the log */
       string origin = "";
       /** trace id, empty string for none */
       string trId = "";
