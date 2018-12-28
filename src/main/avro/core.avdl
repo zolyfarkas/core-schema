@@ -69,7 +69,7 @@ protocol Core {
       union {null, Throwable} throwable = null;
       /** extra log message payload */
       @logicalType("json_array")
-      bytes xtra;
+      string xtra;
     }
 
     /** a record that describes debug detail */
