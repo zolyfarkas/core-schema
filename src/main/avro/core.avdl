@@ -49,6 +49,16 @@ protocol Core {
       array<Throwable> suppressed = [];
     }
 
+    /** A log level, semantics in line with slf4j */
+    enum LogLevel {
+      UNKNOWN,
+      TRACE,
+      DEBUG,
+      INFO,
+      WARN,
+      ERROR
+    } = UNKNOWN;
+
     /** a log record */
     @beta
     record LogRecord {
@@ -56,6 +66,8 @@ protocol Core {
       string origin = "";
       /** trace id, empty string for none */
       string trId = "";
+      /** Log level */
+      LogLevel level = "UNKNOWN";
       /** log record timestamp*/
       @logicalType("instant")
       string ts;
