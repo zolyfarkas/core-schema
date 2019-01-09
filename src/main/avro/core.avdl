@@ -1,6 +1,32 @@
 @namespace("org.spf4j.base.avro")
 protocol Core {
 
+    /**
+     * record representing a method, it is not uniquely identifying a method, since
+     * methods can be overloaded with different arguments
+     */
+    @Immutable
+    record Method {
+      /** the declaring class of the method. */
+      string declaringClass;
+      /** the name of the method */
+      string name;
+    }
+
+    /** record representing the samples where a particular method was executed */
+    record StackSampleElement {
+      /** the id of the sample */
+      int id;
+      /** the parent sample where current method was executed from. */
+      int parentId;
+      /** the number of time this records method has been caught in execution */
+      int count;
+      /** the method caught in execution */
+      Method method;
+    }
+
+
+
     /** record representing a package(jar) archive info */
     @beta
     record PackageInfo {
@@ -24,10 +50,8 @@ protocol Core {
     /** record representing a Stack trace. */
     @beta
     record StackTraceElement {
-      /** java class name */
-      string className;
-      /** java method name */
-      string methodName;
+      /** the method of the stack trace element */
+      Method method;
       /** location, null when location not available */
       union {null, FileLocation} location = null;
       /** package info, null when package info not available */
@@ -95,6 +119,9 @@ protocol Core {
 
       /** a optional throwable, null when none */
       union {null, Throwable} throwable = null;
+
+      /** Stack samples if available */
+      array<StackSampleElement> stackSamples = [];
     }
 
     /** a record to describe a service error */
