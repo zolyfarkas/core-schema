@@ -1,6 +1,24 @@
 @namespace("org.spf4j.base.avro")
 protocol Core {
 
+    /** a instant type */
+    @logicalType("instant")
+    record Instant {
+      /** nr seconds since UNIX epoch */
+      long epochSecond;
+      /** nanosecond component */
+      int nano;
+    }
+
+    /** Any type */
+    @logicalType("any")
+    record Any {
+      /** the avro schema of this object */
+      string avsc;
+      /** the content serializes as avro binary according to the schema from the avsc field */
+      bytes content;
+    }
+
     /**
      * record representing a method, it is not uniquely identifying a method, since
      * methods can be overloaded with different arguments
@@ -133,6 +151,8 @@ protocol Core {
       string type = "";
       /** a error message */
       string message;
+      /** additional structured information regarding this error, null if no additional info is provided */
+      union {null, Any} payload;
       /**
        * optional (when null) debug detail, will be missing when:
        * a client does not desire it.

@@ -35,6 +35,7 @@
     <scm.url>https://github.com/zolyfarkas/core-schema</scm.url>
     <avro.allowUndefinedLogicalTypes>false</avro.allowUndefinedLogicalTypes>
     <avro.validator.validFieldNames>ts</avro.validator.validFieldNames>
+    <avro.version>1.8.1.34p</avro.version>
   </properties>
 
   <scm>
