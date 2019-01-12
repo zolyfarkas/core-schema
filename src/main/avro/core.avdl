@@ -152,7 +152,7 @@ protocol Core {
       /** a error message */
       string message;
       /** additional structured information regarding this error, null if no additional info is provided */
-      union {null, Any} payload;
+      union {null, Any} payload = null;
       /**
        * optional (when null) debug detail, will be missing when:
        * a client does not desire it.
