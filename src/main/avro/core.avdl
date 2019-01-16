@@ -35,7 +35,7 @@ protocol Core {
     record StackSampleElement {
       /** the id of the sample */
       int id;
-      /** the parent sample where current method was executed from. */
+      /** the parent sample where current method was executed from. -1 for root */
       int parentId;
       /** the number of time this records method has been caught in execution */
       int count;
@@ -43,6 +43,11 @@ protocol Core {
       Method method;
     }
 
+    /** Some stack samples */
+    record StackSamples {
+      /** the collection of samples */
+      array<StackSampleElement> stackSamples = [];
+    }
 
 
     /** record representing a package(jar) archive info */
@@ -161,4 +166,8 @@ protocol Core {
        */
       union {null, DebugDetail} detail = null;
     }
+
+
+
+
 }
