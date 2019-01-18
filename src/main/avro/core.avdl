@@ -108,6 +108,7 @@ protocol Core {
 
     /** a log record */
     @beta
+    @Mutable
     record LogRecord {
       /** origin of the log */
       string origin = "";
