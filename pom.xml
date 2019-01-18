@@ -28,14 +28,13 @@
   <parent>
     <groupId>org.spf4j.avro</groupId>
     <artifactId>schema-parent-pom</artifactId>
-    <version>0.4</version>
+    <version>0.5-SNAPSHOT</version>
   </parent>
 
   <properties>
     <scm.url>https://github.com/zolyfarkas/core-schema</scm.url>
     <avro.allowUndefinedLogicalTypes>false</avro.allowUndefinedLogicalTypes>
     <avro.validator.validFieldNames>ts</avro.validator.validFieldNames>
-    <avro.version>1.8.1.35p</avro.version>
   </properties>
 
   <scm>
