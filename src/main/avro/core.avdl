@@ -110,7 +110,7 @@ protocol Core {
     @beta
     @Mutable
     record LogRecord {
-      /** origin of the log */
+      /** origin of the log, empty string when not available */
       string origin = "";
       /** trace id, empty string for none */
       string trId = "";
@@ -129,7 +129,9 @@ protocol Core {
       union {null, Throwable} throwable = null;
       /** extra log message payload */
       @logicalType("json_array")
-      string xtra;
+      string xtra = "[]";
+      /** named attributes (aka tags) */
+      map<@logicalType("json_any") string> attrs = {};
     }
 
     /** a record that describes debug detail */
