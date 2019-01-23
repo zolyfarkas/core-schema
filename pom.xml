@@ -22,7 +22,7 @@
   <groupId>org.spf4j.avro</groupId>
   <artifactId>core-schema</artifactId>
   <packaging>jar</packaging>
-  <version>0.5-SNAPSHOT</version>
+  <version>0.6-SNAPSHOT</version>
   <name>${project.artifactId}-${project.version}</name>
   <description>An example schema project</description>
   <parent>
