@@ -1,9 +1,11 @@
-# fred-client
+# core-schema
 
-A simple java client for the FRED(https://research.stlouisfed.org/docs/api/fred/) api.
+Core general purpose entities covering:
 
-See TestFred.java for examples of use.
+ * Logging
+ * Service Error
+ * Profiling Format
 
-Latest version: [![Download](https://api.bintray.com/packages/zolyfarkas/core/fred-client/images/download.svg)](https://bintray.com/zolyfarkas/core/fred-client/_latestVersion)
+Latest version: [![Download](https://api.bintray.com/packages/zolyfarkas/core/core-schema/images/download.svg)](https://bintray.com/zolyfarkas/core/core-schema/_latestVersion)
 
-[See](https://zolyfarkas.github.io/fred-schema/) for avrodoc.
+[See](https://zolyfarkas.github.io/core-schema/) for avrodoc.
