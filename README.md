@@ -8,4 +8,6 @@ The following objects are defined:
  * DebugDetail
  * PackageDetail
  * Method
+
+see do [at](https://zolyfarkas.github.io/core-schema)
  
