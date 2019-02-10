@@ -153,9 +153,9 @@ protocol Core {
     /** a record to describe a service error */
     @beta
     record ServiceError {
-      /** a error code, efaults to internal serve error */
+      /** a error code, Defaults to internal serve error */
       int code = 500;
-      /** a tring describing the type of the error, ex: the exception type */
+      /** a string describing the type of the error, ex: the exception type */
       string type = "";
       /** a error message */
       string message;
