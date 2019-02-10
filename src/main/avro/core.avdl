@@ -125,13 +125,13 @@ protocol Core {
       string thr;
       /** log message */
       string msg;
-      /** a optional throwable, null when none */
-      union {null, Throwable} throwable = null;
       /** extra log message payload */
       @logicalType("json_array")
       string xtra = "[]";
       /** named attributes (aka tags) */
       map<@logicalType("json_any") string> attrs = {};
+      /** a optional throwable, null when none */
+      union {null, Throwable} throwable = null;
     }
 
     /** a record that describes debug detail */
