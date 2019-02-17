@@ -145,9 +145,9 @@ protocol Core {
 
       /** a optional throwable, null when none */
       union {null, Throwable} throwable = null;
+      
+      mixin StackSamples;
 
-      /** Stack samples if available */
-      array<StackSampleElement> stackSamples = [];
     }
 
     /** a record to describe a service error */
