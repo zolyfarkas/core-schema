@@ -164,13 +164,42 @@ protocol Core {
       /**
        * optional (when null) debug detail, will be missing when:
        * a client does not desire it.
-       * when  client is  not entitled to access it.
-       * across security boundaries.
+       * when  client is  not entitled to access it(across security boundaries, etc).
        */
       union {null, DebugDetail} detail = null;
     }
 
 
+    /** A health status */
+    enum HealthStatus {
+      UNKNOWN,
+      HEALTHY,
+      UNHEALTHY
+    } = UNKNOWN;
+
+    /** A component health record */
+    @beta
+    record HealthRecord {
+
+      /** the name of the component that this record applies to, "" for implicit(context known) */
+      string name = "";
+
+      /** The health state of this component */
+      HealthStatus status = "UNKNOWN";
+
+      /**
+       * optional (when null) debug detail, will be missing when:
+       *
+       * a client does not desire it. component is healthy.
+       * when  client is  not entitled to access it.
+       * across security boundaries.
+       */
+      union {null, DebugDetail} detail = null;
+
+      /** the health of the sub-components */
+      array<HealthRecord> componentsHealth = [];
+
+    }
 
 
 }
