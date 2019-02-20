@@ -213,16 +213,69 @@ protocol Core {
 
     }
 
-    /** a simple tree node  with string values */
+    /** version */
     @beta
-    record TreeNode {
-
-      /** node name name */
-      string name;
-
-      /** children */
-      array<TreeNode> children = [];
+    record Version {
+      /** the version parts */
+      array<union {int, string}> parts;
     }
+
+    /** organization info */
+    @beta
+    record Organization {
+      /** organization name */
+      string name;
+      /** organization site */
+      @logicalType("url")
+      string site;
+    }
+
+    /** application information metadata */
+    @beta
+    record ApplicationInfo {
+      /** application name */
+      string name;
+      /** application description */
+      string description = "";
+      /** application  site */
+      @logicalType("url")
+      string site;
+      /** application organization */
+      Organization ownerOrg;
+    }
+
+    /** network protocol */
+    enum NetworkProtocol {tcp, udp, unknown} = unknown;
+
+    /** a network service descriptor: ex: (http, 80, tcp)*/
+    record NetworkService {
+      /** service name */
+      string name;
+      /** port number */
+      int port;
+      /** network protocol */
+      NetworkProtocol netProtocol;
+    }
+
+    /** process information */
+    @beta
+    record ProcessInfo {
+      /** a string uniquely identifying the process instance */
+      string instanceId;
+      /** the host name */
+      string hostName;
+      /** the process PID */
+      int processId;
+      /** the java runtime version */
+      Version jreVersion;
+      /** the application version */
+      Version appVersion;
+      /** application info */
+      ApplicationInfo info;
+      /** network services served by this process */
+      array<NetworkService> networkServices = [];
+    }
+
 
 
 }
