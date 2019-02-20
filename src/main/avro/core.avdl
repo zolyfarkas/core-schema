@@ -201,5 +201,28 @@ protocol Core {
 
     }
 
+    /** a path entry */
+    @beta
+    record PathEntry {
+
+      /** entry name */
+      string name;
+
+      /** true is this entry is a directory */
+      boolean isDirectory = false;
+
+    }
+
+    /** a simple tree node  with string values */
+    @beta
+    record TreeNode {
+
+      /** node name name */
+      string name;
+
+      /** children */
+      array<TreeNode> children = [];
+    }
+
 
 }
