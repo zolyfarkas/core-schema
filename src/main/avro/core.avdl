@@ -239,7 +239,7 @@ protocol Core {
 
     /** network protocol */
     @beta
-    enum NetworkProtocol {TCP, UDP, HTTP, HTTPS, PROXY, SCTP, UNKNOWN} = UNKNOWN;
+    enum NetworkProtocol {TCP, UDP, SCTP, UNKNOWN} = UNKNOWN;
 
     /** a network service descriptor: ex: (http, 80, tcp)*/
     @beta
