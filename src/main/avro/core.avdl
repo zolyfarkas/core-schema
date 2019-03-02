@@ -213,13 +213,6 @@ protocol Core {
 
     }
 
-    /** version */
-    @beta
-    record Version {
-      /** the version parts */
-      array<union {int, string}> parts;
-    }
-
     /** organization info */
     @beta
     record Organization {
@@ -245,9 +238,11 @@ protocol Core {
     }
 
     /** network protocol */
-    enum NetworkProtocol {tcp, udp, unknown} = unknown;
+    @beta
+    enum NetworkProtocol {TCP, UDP, UNKNOWN} = UNKNOWN;
 
     /** a network service descriptor: ex: (http, 80, tcp)*/
+    @beta
     record NetworkService {
       /** service name */
       string name;
@@ -267,13 +262,21 @@ protocol Core {
       /** the process PID */
       int processId;
       /** the java runtime version */
-      Version jreVersion;
+      string jreVersion;
       /** the application version */
-      Version appVersion;
-      /** application info */
-      ApplicationInfo info;
+      string appVersion;
       /** network services served by this process */
       array<NetworkService> networkServices = [];
+    }
+
+    /** Cluster information */
+    @beta
+    record ClusterInfo {
+       /** application info */
+      ApplicationInfo appInfo;
+
+      /** processes info */
+      array<ProcessInfo> processes;
     }
 
 
