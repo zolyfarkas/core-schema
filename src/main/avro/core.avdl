@@ -239,7 +239,7 @@ protocol Core {
 
     /** network protocol */
     @beta
-    enum NetworkProtocol {TCP, UDP, UNKNOWN} = UNKNOWN;
+    enum NetworkProtocol {TCP, UDP, HTTP, HTTPS, PROXY, SCTP, UNKNOWN} = UNKNOWN;
 
     /** a network service descriptor: ex: (http, 80, tcp)*/
     @beta
@@ -265,6 +265,10 @@ protocol Core {
       string jreVersion;
       /** the application version */
       string appVersion;
+      /** the build id, version control revision ID/Number */
+      string buildId = "";
+      /** build time-stamp, null when not available (missing from app manifest) */
+      union {null, @logicalType("instant") string} buildTimeStamp = null;
       /** network services served by this process */
       array<NetworkService> networkServices = [];
     }
