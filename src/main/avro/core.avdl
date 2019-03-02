@@ -233,8 +233,8 @@ protocol Core {
       /** application  site */
       @logicalType("url")
       string site;
-      /** application organization */
-      Organization ownerOrg;
+      /** application organization, null if no organization */
+      union {null, Organization} ownerOrg = null;
     }
 
     /** network protocol */
