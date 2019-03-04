@@ -284,5 +284,15 @@ protocol Core {
     }
 
 
+    /** represents a internet [media type](http://en.wikipedia.org/wiki/Internet_media_type) like: application/json */
+    record MediaType {
+      /** the media type, examples: application, text,...*/
+      string type = "*";
+      /** the media subtype, examples: json, plain, ... */
+      string subType = "*";
+      /** the media type parameters, examples: charset=UTF-8 */
+      map<string> parameters = {};
+    }
+
 
 }
