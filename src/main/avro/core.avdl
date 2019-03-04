@@ -257,6 +257,8 @@ protocol Core {
     record ProcessInfo {
       /** a string uniquely identifying the process instance */
       string instanceId;
+      /** Process name */
+      string name = "";
       /** the host name */
       string hostName;
       /** the process PID */
