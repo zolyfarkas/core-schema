@@ -41,7 +41,7 @@
     <connection>${scm.connection}</connection>
     <developerConnection>${scm.connection}</developerConnection>
     <url>${scm.url}</url>
-    <tag>core-schema-0.13</tag>
+    <tag>core-schema-0.10</tag>
   </scm>
 
 </project>
