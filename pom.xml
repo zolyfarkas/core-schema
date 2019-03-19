@@ -28,7 +28,7 @@
   <parent>
     <groupId>org.spf4j.avro</groupId>
     <artifactId>schema-parent-pom</artifactId>
-    <version>0.18</version>
+    <version>0.19</version>
   </parent>
 
   <properties>
