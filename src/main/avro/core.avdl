@@ -182,7 +182,7 @@ protocol Core {
     record HealthRecord {
 
       /** the path of the component that this record applies to, "" for implicit(context known) */
-      string name;
+      string name = "";
 
       /** The health state of this component */
       HealthStatus status = "UNKNOWN";
@@ -196,7 +196,7 @@ protocol Core {
        */
       union {null, DebugDetail} detail = null;
 
-      /** the health of the sub-components */
+      /** the health of the sub-components, if any */
       array<HealthRecord> componentsHealth = [];
 
     }
