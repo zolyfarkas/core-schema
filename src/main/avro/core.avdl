@@ -172,8 +172,8 @@ protocol Core {
 
     /** A health status */
     enum HealthStatus {
-      UNKNOWN,
       HEALTHY,
+      UNKNOWN,
       UNHEALTHY
     } = UNKNOWN;
 
@@ -181,8 +181,8 @@ protocol Core {
     @beta
     record HealthRecord {
 
-      /** the name of the component that this record applies to, "" for implicit(context known) */
-      string name = "";
+      /** the path of the component that this record applies to, "" for implicit(context known) */
+      string name;
 
       /** The health state of this component */
       HealthStatus status = "UNKNOWN";
@@ -203,13 +203,16 @@ protocol Core {
 
     /** a path entry */
     @beta
-    record PathEntry {
+    record HealthCheckInfo {
 
-      /** entry name */
+      /** path under /health */
       string name;
 
-      /** true is this entry is a directory */
-      boolean isDirectory = false;
+      /** check description */
+      string description = "";
+
+      /** component infos if available */
+      array<HealthCheckInfo> componentInfos = [];
 
     }
 
