@@ -299,5 +299,7 @@ protocol Core {
       map<string> parameters = {};
     }
 
+    /** ordering type (ascending/descending) */
+    enum Order {ASC, DESC}
 
 }
