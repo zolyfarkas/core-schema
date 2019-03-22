@@ -208,8 +208,8 @@ protocol Core {
     @beta
     record HealthCheckInfo {
 
-      /** path under /health */
-      string name;
+      /** name, ""  when implicit (root) */
+      string name  = "";
 
       /** check description */
       string description = "";
