@@ -181,6 +181,9 @@ protocol Core {
     @beta
     record HealthRecord {
 
+      /** the origin of this health record */
+      string origin = "";
+
       /** the path of the component that this record applies to, "" for implicit(context known) */
       string name = "";
 
