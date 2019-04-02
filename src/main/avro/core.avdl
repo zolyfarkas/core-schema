@@ -305,4 +305,22 @@ protocol Core {
     /** ordering type (ascending/descending) */
     enum Order {ASC, DESC}
 
+    /** File type */
+    enum FileType {
+      UNKNOWN, REGULAR, DIRECTORY
+    } = UNKNOWN;
+
+    /** File entry */
+    record FileEntry {
+      /** file type */
+      FileType type = "REGULAR";
+      /** file name */
+      string name;
+      /** file size */
+      long size;
+      /** last modified */
+      @logicalType("instant")
+      string lastModified;
+    }
+
 }
