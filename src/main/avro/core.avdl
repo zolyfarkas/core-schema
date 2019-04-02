@@ -311,16 +311,16 @@ protocol Core {
     } = UNKNOWN;
 
     /** File entry */
+    @beta
     record FileEntry {
       /** file type */
       FileType type = "REGULAR";
       /** file name */
       string name;
       /** file size */
-      long size;
-      /** last modified */
-      @logicalType("instant")
-      string lastModified;
+      long size = -1;
+      /** last modified, null when  attr is not available/supported */
+      union {null, @logicalType("instant") string} lastModified = null;
     }
 
 }
