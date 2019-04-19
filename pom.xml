@@ -24,7 +24,8 @@
   <packaging>jar</packaging>
   <version>0.19-SNAPSHOT</version>
   <name>${project.artifactId}-${project.version}</name>
-  <description>An example schema project</description>
+  <description>An schema project defining core entities like:  Exception, LogRecord and  core structures for
+  the ssdump and tsdb file formats</description>
   <parent>
     <groupId>org.spf4j.avro</groupId>
     <artifactId>schema-parent-pom</artifactId>
