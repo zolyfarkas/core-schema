@@ -1,0 +1,58 @@
+@namespace("org.spf4j.base.avro.jmx")
+protocol Jmx {
+
+  import idl "core.avdl";
+
+    /** MBeanAttributeInfo */
+    record MBeanAttributeInfo {
+      /** MBean attribute name */
+      string name;
+      /** MBean attribute type */
+      string type;
+      /** MBean attribute description */
+      string description = "";
+      /** is attribute readable or not */
+      boolean isReadable = true;
+      /** is attribute writeable or not */
+      boolean isWriteable = false;
+      /** True if this attribute has an "is" getter, false otherwise */
+      boolean isIs = false;
+      /** attribute info descriptor */
+      map<org.spf4j.base.avro.Any> descriptor = {};
+    }
+
+   /** MBeanParameterInfo */
+    record MBeanParameterInfo {
+      /** MBean attribute name */
+      string name;
+      /** MBean attribute type */
+      string type;
+      /** MBean attribute description */
+      string description = "";
+      /** parameter descriptor */
+      map<org.spf4j.base.avro.Any> descriptor = {};
+    }
+
+
+    /** types of operation impact */
+    enum OperationImpact {UNKNOWN, INFO, ACTION, ACTION_INFO} = UNKNOWN;
+
+
+  /** MBean operation info */
+  record MBeanOperationInfo {
+      /** Operation name */
+      string name;
+      /** Parameters */
+      array<MBeanParameterInfo> parameters = [];
+      /** MBean operation return type */
+      string returnType;
+      /** MBean operation  description */
+      string description = "";
+      /** THis opearation's impact */
+      OperationImpact impact = "UNKNOWN";
+      /** attribute info descriptor */
+      map<org.spf4j.base.avro.Any> descriptor = {};
+    }
+
+
+}
