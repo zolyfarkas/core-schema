@@ -1,9 +1,11 @@
 @namespace("org.spf4j.base.avro.jmx")
+@beta
 protocol Jmx {
 
   import idl "core.avdl";
 
     /** MBeanAttributeInfo */
+    @beta
     record MBeanAttributeInfo {
       /** MBean attribute name */
       string name;
@@ -18,10 +20,11 @@ protocol Jmx {
       /** True if this attribute has an "is" getter, false otherwise */
       boolean isIs = false;
       /** attribute info descriptor */
-      map<org.spf4j.base.avro.Any> descriptor = {};
+      map<union {null, org.spf4j.base.avro.Any}> descriptor = {};
     }
 
    /** MBeanParameterInfo */
+   @beta
     record MBeanParameterInfo {
       /** MBean attribute name */
       string name;
@@ -30,7 +33,7 @@ protocol Jmx {
       /** MBean attribute description */
       string description = "";
       /** parameter descriptor */
-      map<org.spf4j.base.avro.Any> descriptor = {};
+      map<union {null, org.spf4j.base.avro.Any}> descriptor = {};
     }
 
 
@@ -39,6 +42,7 @@ protocol Jmx {
 
 
   /** MBean operation info */
+  @beta
   record MBeanOperationInfo {
       /** Operation name */
       string name;
@@ -51,7 +55,7 @@ protocol Jmx {
       /** THis opearation's impact */
       OperationImpact impact = "UNKNOWN";
       /** attribute info descriptor */
-      map<org.spf4j.base.avro.Any> descriptor = {};
+      map<union {null, org.spf4j.base.avro.Any}> descriptor = {};
     }
 
 
