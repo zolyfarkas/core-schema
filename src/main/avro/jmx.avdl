@@ -58,5 +58,24 @@ protocol Jmx {
       map<union {null, org.spf4j.base.avro.Any}> descriptor = {};
     }
 
+   /** a JMX operation invocation */
+   @beta
+   record OperationInvocation {
+      /** operation name */
+      string name;
+      /** signature */
+      array<string> signature = [];
+      /** operation arguments */
+      array<union {null, @logicalType("json_any") string}> parameters = [];
+   }
+
+   /** Attribute/.Value pair...*/
+   @beta
+   record AttributeValue {
+     /** attribute name */
+     string name;
+     /** attribute value, values can be null */
+     union {null, org.spf4j.base.avro.Any} value;
+   }
 
 }
