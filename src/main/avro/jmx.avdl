@@ -11,6 +11,9 @@ protocol Jmx {
       string name;
       /** MBean attribute type */
       string type;
+      /** the avro schema of the attribute */
+      @logicalType("avsc")
+      string avroSchema;
       /** MBean attribute description */
       string description = "";
       /** is attribute readable or not */
@@ -30,6 +33,9 @@ protocol Jmx {
       string name;
       /** MBean attribute type */
       string type;
+      /** the avro schema of the attribute */
+      @logicalType("avsc")
+      string avroSchema;
       /** MBean attribute description */
       string description = "";
       /** parameter descriptor */
@@ -50,6 +56,8 @@ protocol Jmx {
       array<MBeanParameterInfo> parameters = [];
       /** MBean operation return type */
       string returnType;
+      /** the avro schema of the attribute, this is null when operation does not return anything. */
+      union {null, @logicalType("avsc") string} returnAvroSchema = null;
       /** MBean operation  description */
       string description = "";
       /** THis opearation's impact */
@@ -66,7 +74,7 @@ protocol Jmx {
       /** signature */
       array<string> signature = [];
       /** operation arguments */
-      array<union {null, @logicalType("json_any") string}> parameters = [];
+      array<union {null, org.spf4j.base.avro.Any}> parameters = [];
    }
 
    /** Attribute/.Value pair...*/
