@@ -56,11 +56,11 @@ protocol Jmx {
       array<MBeanParameterInfo> parameters = [];
       /** MBean operation return type */
       string returnType;
-      /** the avro schema of the attribute, this is null when operation does not return anything. */
+      /** The avro schema of the attribute, this is null when operation does not return anything. */
       union {null, @logicalType("avsc") string} returnAvroSchema = null;
       /** MBean operation  description */
       string description = "";
-      /** THis opearation's impact */
+      /** This opearation's impact */
       OperationImpact impact = "UNKNOWN";
       /** attribute info descriptor */
       map<union {null, org.spf4j.base.avro.Any}> descriptor = {};
