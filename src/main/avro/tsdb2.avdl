@@ -1,6 +1,24 @@
 @namespace("org.spf4j.tsdb2.avro")
 protocol Tsdb2 {
 
+  /**
+   * measurement type.
+   */
+  enum MeasurementType {
+      /** a cumulative metric that represents a single monotonically increasing counter whose value can only increase or be reset to zero on restart. */
+      COUNTER,
+      /** a single numerical value that can arbitrarily go up and down. */
+      GAUGE,
+      /** A histogram samples observations (usually things like request durations or response sizes) and counts them in configurable buckets */
+      HISTOGRAM,
+      /** a summary samples observations */
+      SUMMARY,
+      /** Some custom metric */
+      UNTYPED
+    } = UNTYPED;
+
+
+
     /** file header */
     record Header {
         /** file content schema */
@@ -37,6 +55,8 @@ protocol Tsdb2 {
         array<ColumnDef> columns = [];
         /** the interval, in milliseconds */
         int sampleTime;
+        /** measurement type */
+        MeasurementType measurementType = "UNTYPED";
     }
     
     /** data row */
