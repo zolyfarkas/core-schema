@@ -18,6 +18,17 @@ protocol Tsdb2 {
     } = UNTYPED;
 
 
+  /**
+   * Aggregation.
+   */
+   enum Aggregation {
+      UNKNOWN,
+      SUM,
+      MIN,
+      MAX,
+      FIRST,
+      LAST
+   } = UNKNOWN;
 
     /** file header */
     record Header {
@@ -40,6 +51,8 @@ protocol Tsdb2 {
         string unitOfMeasurement;
         /** Column description */
         string description = "";
+        /** the column aggregation */
+        Aggregation aggregation = "UNKNOWN";
     }
 
     /** table definition, name, column names and descriptions */
