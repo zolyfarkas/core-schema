@@ -23,6 +23,7 @@ protocol Tsdb2 {
    */
    enum Aggregation {
       UNKNOWN,
+      NONE,
       SUM,
       MIN,
       MAX,
@@ -51,7 +52,7 @@ protocol Tsdb2 {
         string unitOfMeasurement;
         /** Column description */
         string description = "";
-        /** the column aggregation */
+        /** the column aggregation, if the column value is an aggregate of multiple measurements */
         Aggregation aggregation = "UNKNOWN";
     }
 
@@ -66,7 +67,7 @@ protocol Tsdb2 {
         string description = "";
         /** column definitions */
         array<ColumnDef> columns = [];
-        /** the interval, in milliseconds */
+        /** the interval, in milliseconds that is measurement is collected */
         int sampleTime;
         /** measurement type */
         MeasurementType measurementType = "UNTYPED";
