@@ -90,4 +90,16 @@ protocol Tsdb2 {
         /** rows */
         array<DataRow> values = [];
     }
+
+    /** data row  where relative */
+    record Observation {
+        /** millis relative to a context specific epoch. */
+        long relTimeStamp;
+        /** the file pointer where the Table definition for the data is */
+        long tableDefId;
+        /** the row data */
+        array<long> data;
+    }
+
+
 }
