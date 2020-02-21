@@ -92,6 +92,7 @@ protocol Tsdb2 {
     }
 
     /** data row  where relative */
+    @Mutable
     record Observation {
         /** millis relative to a context specific epoch. */
         long relTimeStamp;
