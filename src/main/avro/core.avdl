@@ -325,4 +325,26 @@ protocol Core {
       union {null, @logicalType("instant") string} lastModified = null;
     }
 
+    /**
+     * HTTP method enum. [rfc7231](https://tools.ietf.org/html/rfc7231#section-4)
+     * [rfc5789](https://tools.ietf.org/html/rfc5789#section-2)
+     */
+    enum HttpMethod {GET, HEAD,  PUT, POST, DELETE, PATCH, OPTIONS, CONNECT, TRACE, UNKNOWN} = UNKNOWN;
+
+    /**
+     * A REST reference, [see](https://docs.microsoft.com/en-us/azure/architecture/best-practices/api-design)
+     */
+    @beta
+    record Link {
+      /** relationship */
+      string rel =  "self";
+      /** the URI of the entity */
+      string @logicalType("uri") href;
+      /** the HTTP method */
+      HttpMethod action = "UNKNOWN";
+      /** The supported content types */
+      array<string> types = [];
+    }
+
+
 }
