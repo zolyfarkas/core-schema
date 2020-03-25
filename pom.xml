@@ -29,13 +29,14 @@
   <parent>
     <groupId>org.spf4j.avro</groupId>
     <artifactId>schema-parent-pom</artifactId>
-    <version>0.33</version>
+    <version>1.0.0</version>
   </parent>
 
   <properties>
     <scm.url>https://github.com/zolyfarkas/core-schema</scm.url>
     <avro.allowUndefinedLogicalTypes>false</avro.allowUndefinedLogicalTypes>
     <avro.validator.validFieldNames>ts,id</avro.validator.validFieldNames>
+    <!-- <avro.useSchemaReferencesForAvsc>true</avro.useSchemaReferencesForAvsc> -->
   </properties>
 
 
