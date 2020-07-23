@@ -6,6 +6,6 @@ Core general purpose entities covering:
  * Service Error
  * Profiling Format
 
-Latest version: [![Download](https://api.bintray.com/packages/zolyfarkas/core/core-schema/images/download.svg)](https://bintray.com/zolyfarkas/core/core-schema/_latestVersion)
+Latest version: [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.spf4j.avro/core-schema/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.spf4j.avro/core-schema/)
 
 [See](https://zolyfarkas.github.io/core-schema/) for avrodoc.
