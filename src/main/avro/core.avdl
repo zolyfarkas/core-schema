@@ -125,6 +125,9 @@ protocol Core {
       string thr;
       /** log message */
       string msg;
+      /** message arguments, the log writer process might materialize them into the message,
+          not doing that would be useful when grouping these log events by their message format */
+      array<string> msgArgs = [];
       /** extra log message payload */
       @logicalType("json_array")
       string xtra = "[]";
