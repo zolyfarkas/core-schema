@@ -36,6 +36,7 @@
     <scm.url>https://github.com/zolyfarkas/core-schema</scm.url>
     <avro.allowUndefinedLogicalTypes>false</avro.allowUndefinedLogicalTypes>
     <avro.validator.validFieldNames>ts,id</avro.validator.validFieldNames>
+    <avro.validator.deprecationRemoval>false</avro.validator.deprecationRemoval>
     <!-- <avro.useSchemaReferencesForAvsc>true</avro.useSchemaReferencesForAvsc> -->
   </properties>
 
