@@ -96,6 +96,26 @@ protocol Core {
       array<Throwable> suppressed = [];
     }
 
+    /** A container of exception patterns */
+    @beta
+    record ThrowablePatterns {
+      /** reason name( as referenced as in ErrorRetryRule.reason) to Exception pattern map */
+      map<ThrowablePattern> patterns = {};
+    }
+
+    /** A pattern that identifies a class of errors. (like Sql transient errors,  connect-timeout...) */
+    @beta
+    record ThrowablePattern {
+      /** The error type. The throwable class name in java.
+       * This pattern will match all throwables of this type (and children of).
+       */
+      string type;
+      /** the error message regex */
+      @logicalType("regexp") string msgPattern = ".*";
+      /** optional code attributes, {"errorCode" : [34]} for java.sql.SqlException.getErrorCode */
+      map<array<int>> codes = {};
+    }
+
     /** A log level, semantics in line with slf4j */
     enum LogLevel {
       UNKNOWN,

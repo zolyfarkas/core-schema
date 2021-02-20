@@ -1,0 +1,109 @@
+@namespace("org.spf4j.failsafe.avro")
+protocol Execution {
+
+    /** a record to describe backoff parameters.
+      the backoff algorythm is basically a tweakable fibonaccy backoff */
+    @beta
+    record RetryParams {
+
+      /**
+       * In case of a error is encountered, this is the number of immediate initial retries.
+       * these retries are done without any delay. This is to leverage a existing selection algorithm
+       * (like select a different destination host).
+       */
+      int nrInitialImmediateRetries = 2;
+
+      /** backoff start delay. This is the first delay after the immediate retries are exhausted */
+      long startDelayNanos = 1000000;
+
+      /** backoff max delay. This is the max delay that the fibonacci delay increase leads to */
+      long maxDelayNanos = 2000000000;
+
+      /** A Random jitter up to this factor will be applied to the retry delay.
+          This help with retries of contention errors. Use zero for no jitter */
+      double retryDelayJitter = 0.3;
+
+      /** maximum number of retries */
+      int maxNrRetries = 20;
+
+      /** maximum amount to retry relative to timeout */
+      double maxTimeToRetryFactor = 1.0;
+
+      /** the maximum amount of time to retry, a negative value implies that  */
+      long maxTimeToRetryNanos = -1;
+    }
+
+
+    /** Error specific retry rule */
+    @beta
+    record ErrorRetryRule {
+      /**
+       * the error reason.
+       * An application wil allow defining reasons via configuration (see org.spf4j.base.avro.ThrowablePatterns)
+       */
+      string reason ;
+      /** the retry parameters, null for default retry parameters */
+      union {null, RetryParams} retryParameters = null;
+    }
+
+
+    /** A custom named retry rule */
+    @beta
+    record RetryRule {
+      /** the rule name */
+      string name;
+    }
+
+    /** a record to describe a retry policy */
+    @beta
+    record RetryPolicy {
+
+      /**
+       * when retry fails,
+       * the resulting exception will contain the previous failure exceptions.
+       * this allow you to see details on previous attempt failures.
+       */
+      int maxSupressedExceptions= 20;
+
+      /** default retry parameters */
+      RetryParams defaultRetryParameters;
+
+      /** Error retry rules */
+      array<union {RetryRule, ErrorRetryRule}> rules = [];
+
+    }
+
+    /** a record to describe a hedge policy */
+    @beta
+    record HedgePolicy {
+
+      /** hedging algo */
+      string algo = "timeout-relative";
+
+      /** Minimum hedge delay nanos */
+      long minHedgeDelayNanos;
+
+      /** maximum hedge delay nanos */
+      long maxHedgeDelayNanos;
+
+      /** number of hedges */
+      long nrHedges;
+
+    }
+
+
+    /** a record to describe a execution policy */
+    @beta
+    record ExecutionPolicy {
+      /** maximum amount of time for execution. (includes all retries) */
+      long overallTimeoutNanos;
+      /** maximum amount of time per attempt */
+      long attemptTimeoutNanos;
+      /** The retry policy, null if no retries */
+      union {null, RetryPolicy} retryPolicy = null;
+      /** the hedging policy, null if no hedging */
+      union {null, HedgePolicy} hedgePolicy = null;
+    }
+   
+
+}
