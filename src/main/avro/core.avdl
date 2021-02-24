@@ -96,17 +96,36 @@ protocol Core {
       array<Throwable> suppressed = [];
     }
 
+    /**
+     * A Operation in your application.
+     * for example a jdbc operation could look like:
+     * ```
+     * { "name" : "jdbc", "propagates" : { "name" : "network" } }
+     * ```
+     */
+    @beta
+    record Operation {
+      /** the name of the operation, like "jdbc", "jax-rs-client",.... */
+      string name;
+
+      /** the list of sub-operations whose exceptions would be propagated (either directly or as a root cause). */
+      array<Operation> propagates = [];
+    }
+
     /** A container of exception patterns */
     @beta
     record ThrowablePatterns {
-      /** reason name( as referenced as in ErrorRetryRule.reason) to Exception pattern map */
+      /** The name of the operation these throwable patterns apply to. */
+      string operationName = "";
+      /** reason name( as referenced as in ResponseRetryRule.response) to Exception pattern map */
       map<ThrowablePattern> patterns = {};
     }
 
     /** A pattern that identifies a class of errors. (like Sql transient errors,  connect-timeout...) */
     @beta
     record ThrowablePattern {
-      /** The error type. The throwable class name in java.
+      /**
+       * The error type. The throwable class name in java.
        * This pattern will match all throwables of this type (and children of).
        */
       string type;

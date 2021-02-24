@@ -36,18 +36,22 @@ protocol Execution {
 
     /** Error specific retry rule */
     @beta
-    record ErrorRetryRule {
+    record ResponseRetryRule {
       /**
-       * the error reason.
-       * An application wil allow defining reasons via configuration (see org.spf4j.base.avro.ThrowablePatterns)
+       * the response name.
+       * An application will allow defining response predicates via configuration.
+       * like: (see org.spf4j.base.avro.ThrowablePatterns for exceptional responses)
        */
-      string reason ;
+      string response;
       /** the retry parameters, null for default retry parameters */
       union {null, RetryParams} retryParameters = null;
     }
 
 
-    /** A custom named retry rule */
+    /** 
+     * A custom named retry rule, The entire retry predicate is expressed via native logic in your app.
+     * Custom rules are registered via the ServiceLoader mechanism.
+     */
     @beta
     record RetryRule {
       /** the rule name */
@@ -60,8 +64,8 @@ protocol Execution {
 
       /**
        * when retry fails,
-       * the resulting exception will contain the previous failure exceptions.
-       * this allow you to see details on previous attempt failures.
+       * the resulting exception will contain the previous failure exceptions in their suppression chain.
+       * this provides more insight into what went wrong in a retryable operation.
        */
       int maxSupressedExceptions= 20;
 
@@ -69,24 +73,24 @@ protocol Execution {
       RetryParams defaultRetryParameters;
 
       /** Error retry rules */
-      array<union {RetryRule, ErrorRetryRule}> rules = [];
+      array<union {RetryRule, ResponseRetryRule}> rules = [];
 
     }
 
     /** a record to describe a hedge policy */
     @beta
-    record HedgePolicy {
-
-      /** hedging algo */
-      string algo = "timeout-relative";
+    record TimeoutRelatimeHedgePolicy {
 
       /** Minimum hedge delay nanos */
-      long minHedgeDelayNanos;
+      long minHedgeDelayNanos = 0;
 
       /** maximum hedge delay nanos */
-      long maxHedgeDelayNanos;
+      long maxHedgeDelayNanos = 0;
 
-      /** number of hedges */
+      /** timeout factor */
+      double factor = 0;
+
+      /** number of hedges (number of parallel requests made) */
       long nrHedges;
 
     }
@@ -95,14 +99,35 @@ protocol Execution {
     /** a record to describe a execution policy */
     @beta
     record ExecutionPolicy {
-      /** maximum amount of time for execution. (includes all retries) */
+      /**
+       * maximum amount of time for execution of operation. (includes all retries)
+       * Local context deadline can overwrite this value for a operation to something smaller based on the deadline.
+       */
       long overallTimeoutNanos;
-      /** maximum amount of time per attempt */
+      /**
+       * maximum amount of time  for execution attempt of operation.
+       * Local context deadline can overwrite this value for a operation to something smaller based on the deadline.
+       */
       long attemptTimeoutNanos;
       /** The retry policy, null if no retries */
       union {null, RetryPolicy} retryPolicy = null;
       /** the hedging policy, null if no hedging */
-      union {null, HedgePolicy} hedgePolicy = null;
+      union {null, TimeoutRelatimeHedgePolicy} hedgePolicy = null;
+      /** circuit breaker on for this operation. This provides a way to disable a invocation manually via config */
+      boolean circuitBreaker = false;
+    }
+
+    /**
+     * A set of operations and their execution policies.
+     */
+    @beta
+    record OperationExecutionPolicies {
+      /**
+       * operation name -> Execution policy map
+       * where operation name ca be [client_id?].[app scope?].[operation name]
+       * this allows control over execution policies at your choice of granularity.
+       */
+      map<ExecutionPolicy> operationPolicies = {};
     }
    
 
