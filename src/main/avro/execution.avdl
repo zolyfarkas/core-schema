@@ -91,7 +91,7 @@ protocol Execution {
       double factor = 0;
 
       /** number of hedges (number of parallel requests made) */
-      long nrHedges;
+      long nrHedges = 1;
 
     }
 

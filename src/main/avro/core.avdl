@@ -100,7 +100,7 @@ protocol Core {
      * A Operation in your application.
      * for example a jdbc operation could look like:
      * ```
-     * { "name" : "jdbc", "propagates" : { "name" : "network" } }
+     * { "name" : "jdbc", "propagates" : [ "network" ] }
      * ```
      */
     @beta
@@ -108,22 +108,40 @@ protocol Core {
       /** the name of the operation, like "jdbc", "jax-rs-client",.... */
       string name;
 
-      /** the list of sub-operations whose exceptions would be propagated (either directly or as a root cause). */
-      array<Operation> propagates = [];
+      /** the list of sub-operation names whose exceptions would be propagated (either directly or as a root cause). */
+      array<string> propagates = [""];
+    }
+
+    /**
+     * Collection of operations.
+     */
+    @beta
+    record Operations {
+      /** the operations list*/
+      array<Operation> operations = [];
     }
 
     /** A container of exception patterns */
     @beta
     record ThrowablePatterns {
-      /** The name of the operation these throwable patterns apply to. */
-      string operationName = "";
       /** reason name( as referenced as in ResponseRetryRule.response) to Exception pattern map */
-      map<ThrowablePattern> patterns = {};
+      array<OperationThrowablePatterns> patterns = [];
+    }
+
+    /** A container of exception patterns */
+    @beta
+    record OperationThrowablePatterns {
+      /** The name of the operation these throwable patterns apply to. empty string a core java operation */
+      string operationName = "";
+      /** List of Throable patterns (for lack of a better word) */
+      array<ThrowablePattern> patterns = [];
     }
 
     /** A pattern that identifies a class of errors. (like Sql transient errors,  connect-timeout...) */
     @beta
     record ThrowablePattern {
+      /** A name for these class of exceptions. THis name will be used to reference them in configurations. */
+      string name;
       /**
        * The error type. The throwable class name in java.
        * This pattern will match all throwables of this type (and children of).
