@@ -34,19 +34,34 @@ protocol Execution {
     }
 
 
-    /** Error specific retry rule */
+    /** Response 2 retry rule mappings */
     @beta
-    record ResponseRetryRule {
-      /**
-       * the response name.
-       * An application will allow defining response predicates via configuration.
-       * like: (see org.spf4j.base.avro.ThrowablePatterns for exceptional responses)
-       */
-      string response;
-      /** the retry parameters, null for default retry parameters */
-      union {null, RetryParams} retryParameters = null;
+    record ResponseRetryRules {
+      /** response name 2 retry params mappings */
+      map<RetryParams> response2RetryParams = {};
     }
 
+
+    /** A scripted retry rule */
+    @beta
+    record RetryPredicate {
+
+      /** The name of the script executor to lookup */
+      string language = "zel";
+
+      /**
+       * the script which is a implementation of:
+       *  RetryDecision getDecision(Object value, Callable<Object> what)
+       */
+      string returnPredicate = "";
+
+      /**
+       *  the script which is a implementation of:
+       *  RetryDecision getExceptionDecision(Throwable value, Callable<Object> what)
+       */
+      string throwablePredicate = "";
+
+    }
 
     /** 
      * A custom named retry rule, The entire retry predicate is expressed via native logic in your app.
@@ -56,6 +71,9 @@ protocol Execution {
     record RetryRule {
       /** the rule name */
       string name;
+
+      /** the retry predicate implementation, if null, implementation will be looked up via the ServiceLoader mechanism */
+      union {null, RetryPredicate} predicate = null;
     }
 
     /** a record to describe a retry policy */
@@ -73,7 +91,9 @@ protocol Execution {
       RetryParams defaultRetryParameters;
 
       /** Error retry rules */
-      array<union {RetryRule, ResponseRetryRule}> rules = [];
+      array<RetryRule>  retryRules = [];
+
+      mixin ResponseRetryRules;
 
     }
 

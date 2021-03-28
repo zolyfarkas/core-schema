@@ -123,34 +123,48 @@ protocol Core {
 
     /** A container of exception patterns */
     @beta
-    record ThrowablePatterns {
+    record OperationsPatterns {
       /** reason name( as referenced as in ResponseRetryRule.response) to Exception pattern map */
-      array<OperationThrowablePatterns> patterns = [];
+      array<OperationPatterns> patterns = [];
     }
 
     /** A container of exception patterns */
     @beta
-    record OperationThrowablePatterns {
+    record OperationPatterns {
       /** The name of the operation these throwable patterns apply to. empty string a core java operation */
       string operationName = "";
       /** List of Throable patterns (for lack of a better word) */
-      array<ThrowablePattern> patterns = [];
+      array<ThrowablePattern> throwablePatterns = [];
+      /** List of return  patterns (for lack of a better word) */
+      array<ObjectPattern> returnPatterns = [];
     }
+
+    /** A pattern the identifies a class of objects */
+    @beta
+    record ObjectPattern {
+      /** A name for these class of objects. This name will be used to reference them in configurations. */
+      string name;
+      /**
+       * The error type. The object class name in java.
+       * This pattern will match all throwables of this type (and children of).
+       */
+      string type;
+
+      /** optional code attributes, {"errorCode" : [34]} for
+          java.sql.SqlException.getErrorCode or {"status" : [400, 408]} javax.ws.rs.core.Response.getStatus */
+      map<array<int>> codes = {};
+    }
+
 
     /** A pattern that identifies a class of errors. (like Sql transient errors,  connect-timeout...) */
     @beta
     record ThrowablePattern {
-      /** A name for these class of exceptions. THis name will be used to reference them in configurations. */
-      string name;
-      /**
-       * The error type. The throwable class name in java.
-       * This pattern will match all throwables of this type (and children of).
-       */
-      string type;
+
+      mixin ObjectPattern;
+
       /** the error message regex */
       @logicalType("regexp") string msgPattern = ".*";
-      /** optional code attributes, {"errorCode" : [34]} for java.sql.SqlException.getErrorCode */
-      map<array<int>> codes = {};
+
     }
 
     /** A log level, semantics in line with slf4j */
