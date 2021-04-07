@@ -123,16 +123,14 @@ protocol Core {
 
     /** A container of exception patterns */
     @beta
-    record OperationsPatterns {
-      /** reason name( as referenced as in ResponseRetryRule.response) to Exception pattern map */
-      array<OperationPatterns> patterns = [];
+    record OperationsResultPatterns {
+      /** operation name( as referenced as inOperations) to result patterns map */
+      map<OperationResultPatterns> patterns = {};
     }
 
     /** A container of exception patterns */
     @beta
-    record OperationPatterns {
-      /** The name of the operation these throwable patterns apply to. empty string a core java operation */
-      string operationName = "";
+    record OperationResultPatterns {
       /** List of Throable patterns (for lack of a better word) */
       array<ThrowablePattern> throwablePatterns = [];
       /** List of return  patterns (for lack of a better word) */
