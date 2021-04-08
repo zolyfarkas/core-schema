@@ -131,17 +131,15 @@ protocol Core {
     /** A container of exception patterns */
     @beta
     record OperationResultPatterns {
-      /** List of Throable patterns (for lack of a better word) */
-      array<ThrowablePattern> throwablePatterns = [];
-      /** List of return  patterns (for lack of a better word) */
-      array<ObjectPattern> returnPatterns = [];
+      /** name -> Throwable patterns (for lack of a better word) */
+      map<ThrowablePattern> throwablePatterns = {};
+      /** name ->  return patterns (for lack of a better word) */
+      map<ObjectPattern> returnPatterns = {};
     }
 
     /** A pattern the identifies a class of objects */
     @beta
     record ObjectPattern {
-      /** A name for these class of objects. This name will be used to reference them in configurations. */
-      string name;
       /**
        * The error type. The object class name in java.
        * This pattern will match all throwables of this type (and children of).
