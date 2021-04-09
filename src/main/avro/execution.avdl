@@ -29,7 +29,7 @@ protocol Execution {
       /** maximum amount to retry relative to timeout */
       double maxTimeToRetryFactor = 1.0;
 
-      /** the maximum amount of time to retry, a negative value implies that  */
+      /** the maximum amount of time to retry, a negative value implies that the max retry time is the context deadline */
       long maxTimeToRetryNanos = -1;
     }
 
