@@ -44,22 +44,22 @@ protocol Execution {
 
     /** A scripted retry rule */
     @beta
-    record RetryPredicate {
+    record RetryPredicateSupplier {
 
       /** The name of the script executor to lookup */
       string language = "zel";
 
       /**
        * the script which is a implementation of:
-       *  RetryDecision getDecision(Object value, Callable<Object> what)
+       * (long, long) ->   (Object value, Callable<Object>) -> RetryDecision
        */
-      string returnPredicate = "";
+      string returnPredicateSupplier = "";
 
       /**
        *  the script which is a implementation of:
-       *  RetryDecision getExceptionDecision(Throwable value, Callable<Object> what)
+       *  (long, long) ->   (Throwable value, Callable<Object>) -> RetryDecision
        */
-      string throwablePredicate = "";
+      string throwablePredicateSupplier = "";
 
     }
 
@@ -73,7 +73,7 @@ protocol Execution {
       string name;
 
       /** the retry predicate implementation, if null, implementation will be looked up via the ServiceLoader mechanism */
-      union {null, RetryPredicate} predicate = null;
+      union {null, RetryPredicateSupplier} predicate = null;
     }
 
     /** a record to describe a retry policy */
@@ -87,8 +87,8 @@ protocol Execution {
        */
       int maxSupressedExceptions= 20;
 
-      /** default retry parameters */
-      RetryParams defaultRetryParameters;
+      /** default retry parameters. Default retry parameters for all response retry rules */
+      RetryParams defaultRetryParameters = {};
 
       /** Error retry rules */
       array<RetryRule>  retryRules = [];
