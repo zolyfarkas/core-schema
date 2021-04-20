@@ -44,7 +44,7 @@ protocol Execution {
 
     /** A scripted retry rule */
     @beta
-    record RetryPredicateSupplier {
+    record ScriptedRetryPredicateSupplier {
 
       /** The name of the script executor to lookup */
       string language = "zel";
@@ -73,7 +73,7 @@ protocol Execution {
       string name;
 
       /** the retry predicate implementation, if null, implementation will be looked up via the ServiceLoader mechanism */
-      union {null, RetryPredicateSupplier} predicate = null;
+      union {null, ScriptedRetryPredicateSupplier} predicateSupplier = null;
     }
 
     /** a record to describe a retry policy */
