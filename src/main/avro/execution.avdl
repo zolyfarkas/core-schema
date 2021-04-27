@@ -42,22 +42,25 @@ protocol Execution {
     }
 
 
-    /** A scripted retry rule */
+    /** A scripted retry rule. To use when ResponseRetryRules is not flexible enough*/
     @beta
     record ScriptedRetryPredicateSupplier {
+
+      /** The language of the system this script applies to */
+      string targetLanguage = "java";
 
       /** The name of the script executor to lookup */
       string language = "zel";
 
       /**
-       * the script which is a implementation of:
-       * (long, long) ->   (Object value, Callable<Object>) -> RetryDecision
+       * the script which for targetLanguage = java is a implementation of:
+       * (long, long, Object value, Callable<Object>) -> RetryDecision
        */
       string returnPredicateSupplier = "";
 
       /**
-       *  the script which is a implementation of:
-       *  (long, long) ->   (Throwable value, Callable<Object>) -> RetryDecision
+       *  the script which for targetLanguage = java is a implementation of:
+       *  (long, long, Throwable value, Callable<Object>) -> RetryDecision
        */
       string throwablePredicateSupplier = "";
 
@@ -72,7 +75,8 @@ protocol Execution {
       /** the rule name */
       string name;
 
-      /** the retry predicate implementation, if null, implementation will be looked up via the ServiceLoader mechanism */
+      /** the retry predicate implementation, if null,
+         implementation will be looked up via the ServiceLoader mechanism or equivalent */
       union {null, ScriptedRetryPredicateSupplier} predicateSupplier = null;
     }
 
