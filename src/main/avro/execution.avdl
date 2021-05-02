@@ -91,9 +91,6 @@ protocol Execution {
        */
       int maxSupressedExceptions= 20;
 
-      /** default retry parameters. Default retry parameters for all response retry rules */
-      RetryParams defaultRetryParameters = {};
-
       /** Error retry rules */
       array<RetryRule>  retryRules = [];
 
