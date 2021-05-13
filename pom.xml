@@ -38,7 +38,7 @@
     <avro.validator.validFieldNames>ts,id</avro.validator.validFieldNames>
     <avro.validator.deprecationRemoval>false</avro.validator.deprecationRemoval>
     <!-- <avro.useSchemaReferencesForAvsc>true</avro.useSchemaReferencesForAvsc> -->
-    <avro.version>1.10.0.1p</avro.version>
+    <avro.version>1.10.0.2p-SNAPSHOT</avro.version>
   </properties>
 
 

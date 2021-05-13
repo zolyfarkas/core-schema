@@ -14,10 +14,10 @@ protocol Execution {
       int nrInitialImmediateRetries = 2;
 
       /** backoff start delay. This is the first delay after the immediate retries are exhausted */
-      long startDelayNanos = 1000000;
+      @logicalType("duration") string startDelay = "PT0.001S";
 
       /** backoff max delay. This is the max delay that the fibonacci delay increase leads to */
-      long maxDelayNanos = 2000000000;
+      @logicalType("duration") string maxDelay = "PT2S";
 
       /** A Random jitter up to this factor will be applied to the retry delay.
           This help with retries of contention errors. Use zero for no jitter */
@@ -29,8 +29,8 @@ protocol Execution {
       /** maximum amount to retry relative to timeout */
       double maxTimeToRetryFactor = 1.0;
 
-      /** the maximum amount of time to retry, a negative value implies that the max retry time is the context deadline */
-      long maxTimeToRetryNanos = -1;
+      /** the maximum amount of time to retry, a null value implies that the max retry time is the context deadline */
+      union {null, @logicalType("duration") string} maxTimeToRetry = null;
     }
 
 
@@ -100,19 +100,19 @@ protocol Execution {
 
     /** a record to describe a hedge policy */
     @beta
-    record TimeoutRelatimeHedgePolicy {
+    record TimeoutRelativeHedgePolicy {
 
       /** Minimum hedge delay nanos */
-      long minHedgeDelayNanos = 0;
+      @logicalType("duration") string minHedgeDelay = "PT0S";
 
       /** maximum hedge delay nanos */
-      long maxHedgeDelayNanos = 0;
+      @logicalType("duration") string maxHedgeDelay = "PT0S";
 
       /** timeout factor */
       double factor = 0;
 
       /** number of hedges (number of parallel requests made) */
-      long nrHedges = 1;
+      int nrHedges = 1;
 
     }
 
@@ -124,16 +124,16 @@ protocol Execution {
        * maximum amount of time for execution of operation. (includes all retries)
        * Local context deadline can overwrite this value for a operation to something smaller based on the deadline.
        */
-      long overallTimeoutNanos;
+      @logicalType("duration") string overallTimeout;
       /**
        * maximum amount of time  for execution attempt of operation.
        * Local context deadline can overwrite this value for a operation to something smaller based on the deadline.
        */
-      long attemptTimeoutNanos;
+      @logicalType("duration") string attemptTimeout;
       /** The retry policy, null if no retries */
       union {null, RetryPolicy} retryPolicy = null;
       /** the hedging policy, null if no hedging */
-      union {null, TimeoutRelatimeHedgePolicy} hedgePolicy = null;
+      union {null, TimeoutRelativeHedgePolicy} hedgePolicy = null;
       /** circuit breaker on for this operation. This provides a way to disable a invocation manually via config */
       boolean circuitBreaker = false;
     }
