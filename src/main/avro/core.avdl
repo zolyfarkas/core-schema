@@ -49,6 +49,25 @@ protocol Core {
       array<StackSampleElement> stackSamples = [];
     }
 
+    /** A record to store profile information from a process into a avro file (*.ssp.avro) */
+    record ApplicationStackSamples {
+      /** The instant after which all collected samples are from */
+      @logicalType("instant")
+      long collectedFrom;
+
+      /** The instant up to all collected samples are */
+      @logicalType("instant")
+      long collectedTo;
+
+      /** a method of tagging a collected sample. (like a on-demand profile collection) */
+      string tag = "";
+
+      /** Application specific context where the samples belong to. (like GET/resource)*/
+      string context = "";
+
+      mixin StackSamples;
+    }
+
 
     /** record representing a package(jar) archive info */
     @beta
