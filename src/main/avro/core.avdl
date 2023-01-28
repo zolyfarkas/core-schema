@@ -221,8 +221,6 @@ protocol Core {
       map<@logicalType("json_any") string> attrs = {};
       /** a optional throwable, null when none */
       union {null, Throwable} throwable = null;
-
-      mixin StackSamples;
     }
 
     /** a record that describes debug detail */
