@@ -206,13 +206,13 @@ protocol Core {
       @logicalType("instant")
       string ts;
       /** logger name */
-      string logger;
+      string logger = "";
       /** thread name */
-      string thr;
-      /** log message */
+      string thr = "";
+      /** log message or log message format */
       string msg;
-      /** message arguments, the log writer process might materialize them into the message,
-          not doing that would be useful when grouping these log events by their message format */
+      /** message arguments, the log writer process can materialize them into the message
+          and in that case the argument list will be empty.*/
       array<string> msgArgs = [];
       /** extra log message payload */
       @logicalType("json_array")
