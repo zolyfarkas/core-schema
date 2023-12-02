@@ -217,7 +217,7 @@ protocol Core {
       /** extra log message payload */
       @logicalType("json_array")
       string xtra = "[]";
-      /** named attributes (aka tags) */
+      /** named attributes (aka tags, aka sl4fj 2.0 key value pairs) */
       map<@logicalType("json_any") string> attrs = {};
       /** a optional throwable, null when none */
       union {null, Throwable} throwable = null;
